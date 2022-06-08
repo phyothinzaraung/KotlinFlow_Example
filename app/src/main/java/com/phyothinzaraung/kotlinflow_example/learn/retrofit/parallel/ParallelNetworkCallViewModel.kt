@@ -1,4 +1,4 @@
-package com.phyothinzaraung.kotlinflow_example.learn.series
+package com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +10,11 @@ import com.phyothinzaraung.kotlinflow_example.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 
-class SeriesNetworkCallViewModel(private val apiHelper: ApiHelper):ViewModel() {
+class ParallelNetworkCallViewModel(private val apiHelper: ApiHelper): ViewModel() {
 
     private val users = MutableLiveData<Resource<List<User>>>()
 
@@ -25,18 +25,17 @@ class SeriesNetworkCallViewModel(private val apiHelper: ApiHelper):ViewModel() {
     private fun fetchUsers(){
         viewModelScope.launch {
             users.postValue(Resource.loading(null))
-            val allUsersFromApi = mutableListOf<User>()
             apiHelper.getUsers()
-                .flatMapConcat {
-                    usersFromApi -> allUsersFromApi.addAll(usersFromApi)
-                    apiHelper.getMoreUsers()
-                }.flowOn(Dispatchers.Default)
-                .catch {
-                    error -> users.postValue(Resource.error(error.toString(), null))
-                }
-                .collect { moreUsersFromApi ->
+                .zip(apiHelper.getMoreUsers()){ usersFromApi, moreUsersFromApi ->
+                    val allUsersFromApi = mutableListOf<User>()
+                    allUsersFromApi.addAll(usersFromApi)
                     allUsersFromApi.addAll(moreUsersFromApi)
-                    users.postValue(Resource.success(allUsersFromApi))
+                    return@zip allUsersFromApi
+                }.flowOn(Dispatchers.Default)
+                .catch { e ->
+                    users.postValue(Resource.error(e.message, null))
+                }.collect {
+                    users.postValue(Resource.success(it))
                 }
         }
     }

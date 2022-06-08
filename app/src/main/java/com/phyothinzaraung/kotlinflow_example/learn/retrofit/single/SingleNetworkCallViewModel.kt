@@ -1,4 +1,4 @@
-package com.phyothinzaraung.kotlinflow_example.learn.retrofit
+package com.phyothinzaraung.kotlinflow_example.learn.retrofit.single
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

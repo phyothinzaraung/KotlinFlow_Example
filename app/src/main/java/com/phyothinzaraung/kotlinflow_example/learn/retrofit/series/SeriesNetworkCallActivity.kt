@@ -1,4 +1,4 @@
-package com.phyothinzaraung.kotlinflow_example.learn.series
+package com.phyothinzaraung.kotlinflow_example.learn.retrofit.series
 
 import android.os.Bundle
 import android.view.View
@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.phyothinzaraung.kotlinflow_example.R
 import com.phyothinzaraung.kotlinflow_example.data.api.ApiHelperImpl
 import com.phyothinzaraung.kotlinflow_example.data.api.RetrofitBuilder
+import com.phyothinzaraung.kotlinflow_example.data.local.DatabaseBuilder
+import com.phyothinzaraung.kotlinflow_example.data.local.DatabaseHelperImpl
 import com.phyothinzaraung.kotlinflow_example.data.model.User
 import com.phyothinzaraung.kotlinflow_example.learn.base.UserAdapter
-import com.phyothinzaraung.kotlinflow_example.util.Resource
 import com.phyothinzaraung.kotlinflow_example.util.Status
 import com.phyothinzaraung.kotlinflow_example.util.ViewModelFactory
 
@@ -51,7 +52,8 @@ class SeriesNetworkCallActivity: AppCompatActivity() {
 
     private fun setupViewModel(){
         viewModel = ViewModelProvider(this,
-        ViewModelFactory(ApiHelperImpl(RetrofitBuilder.apiService))).get(SeriesNetworkCallViewModel::class.java)
+        ViewModelFactory(ApiHelperImpl(RetrofitBuilder.apiService),
+        DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext)))).get(SeriesNetworkCallViewModel::class.java)
     }
 
     private fun setupObserver(){
@@ -67,7 +69,7 @@ class SeriesNetworkCallActivity: AppCompatActivity() {
                     recyclerView.visibility = View.GONE
                 }
                 Status.ERROR -> {
-                    progressBar.visibility = View.GONE
+                    //progressBar.visibility = View.GONE
                     Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
                 }
             }

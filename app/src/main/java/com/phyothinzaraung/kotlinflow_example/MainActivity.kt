@@ -4,14 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.phyothinzaraung.kotlinflow_example.learn.retrofit.SingleNetworkCallActivity
-import com.phyothinzaraung.kotlinflow_example.learn.series.SeriesNetworkCallActivity
-import com.phyothinzaraung.kotlinflow_example.learn.series.SeriesNetworkCallViewModel
+import com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel.ParallelNetworkCallActivity
+import com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel.ParallelNetworkCallViewModel
+import com.phyothinzaraung.kotlinflow_example.learn.retrofit.single.SingleNetworkCallActivity
+import com.phyothinzaraung.kotlinflow_example.learn.retrofit.series.SeriesNetworkCallActivity
+import com.phyothinzaraung.kotlinflow_example.learn.room.RoomDBActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var btnSingleCall: Button
     private lateinit var btnSeriesCall: Button
+    private lateinit var btnParallelCall: Button
+    private lateinit var btnRoomDb: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,16 @@ class MainActivity : AppCompatActivity() {
         btnSeriesCall = findViewById(R.id.btnSeriesCall)
         btnSeriesCall.setOnClickListener {
             startActivity(Intent(this, SeriesNetworkCallActivity::class.java))
+        }
+
+        btnParallelCall = findViewById(R.id.btnParallelCall)
+        btnParallelCall.setOnClickListener {
+            startActivity(Intent(this, ParallelNetworkCallActivity::class.java))
+        }
+
+        btnRoomDb = findViewById(R.id.btnRoomDb)
+        btnRoomDb.setOnClickListener {
+            startActivity(Intent(this, RoomDBActivity::class.java))
         }
 
     }

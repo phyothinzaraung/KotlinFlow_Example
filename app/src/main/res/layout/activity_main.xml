@@ -17,31 +17,29 @@
             android:id="@+id/btnSingleCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="startSingleNetworkCallActivity"
             android:text="@string/single_network_call"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnSeriesCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="startSeriesNetworkCallsActivity"
             android:text="@string/series_network_calls"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <Button
+            android:id="@+id/btnParallelCall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="startParallelNetworkCallsActivity"
             android:text="@string/parallel_network_calls"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <Button
+            android:id="@+id/btnRoomDb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="startRoomDatabaseActivity"
             android:text="@string/room_database"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <Button
             android:layout_width="match_parent"

@@ -24,8 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".learn.retrofit.SingleNetworkCallActivity"/>
-        <activity android:name=".learn.series.SeriesNetworkCallActivity"/>
+        <activity android:name=".learn.retrofit.single.SingleNetworkCallActivity"/>
+        <activity android:name=".learn.retrofit.series.SeriesNetworkCallActivity"/>
+        <activity android:name=".learn.retrofit.parallel.ParallelNetworkCallActivity"/>
+        <activity android:name=".learn.room.RoomDBActivity"/>
     </application>
 
 </manifest>

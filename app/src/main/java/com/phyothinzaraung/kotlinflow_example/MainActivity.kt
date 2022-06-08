@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.phyothinzaraung.kotlinflow_example.learn.errorhandling.CatchActivity
 import com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel.ParallelNetworkCallActivity
 import com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel.ParallelNetworkCallViewModel
 import com.phyothinzaraung.kotlinflow_example.learn.retrofit.single.SingleNetworkCallActivity
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnSeriesCall: Button
     private lateinit var btnParallelCall: Button
     private lateinit var btnRoomDb: Button
+    private lateinit var btnCatchError: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         btnRoomDb = findViewById(R.id.btnRoomDb)
         btnRoomDb.setOnClickListener {
             startActivity(Intent(this, RoomDBActivity::class.java))
+        }
+
+        btnCatchError = findViewById(R.id.btnCatchError)
+        btnCatchError.setOnClickListener {
+            startActivity(Intent(this, CatchActivity::class.java))
         }
 
     }

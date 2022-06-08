@@ -1,6 +1,7 @@
-package com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel
+package com.phyothinzaraung.kotlinflow_example.learn.errorhandling
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -19,12 +20,12 @@ import com.phyothinzaraung.kotlinflow_example.learn.base.UserAdapter
 import com.phyothinzaraung.kotlinflow_example.util.Status
 import com.phyothinzaraung.kotlinflow_example.util.ViewModelFactory
 
-class ParallelNetworkCallActivity: AppCompatActivity() {
+class CatchActivity: AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var userAdapter: UserAdapter
-    private lateinit var viewModel: ParallelNetworkCallViewModel
+    private lateinit var viewModel: CatchViewModel
+    private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,31 +37,28 @@ class ParallelNetworkCallActivity: AppCompatActivity() {
     }
 
     private fun setupUI(){
-
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                recyclerView.context,
-                (recyclerView.layoutManager as LinearLayoutManager).orientation
-            )
-        )
-        userAdapter = UserAdapter(arrayListOf())
-        recyclerView.adapter = userAdapter
+        adapter = UserAdapter(arrayListOf())
+        recyclerView.addItemDecoration(DividerItemDecoration(
+            applicationContext, (recyclerView.layoutManager as LinearLayoutManager).orientation
+        ))
+        recyclerView.adapter = adapter
     }
 
     private fun setupViewModel(){
-        viewModel = ViewModelProvider(this,
-            ViewModelFactory( ApiHelperImpl(RetrofitBuilder.apiService),
-            DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))))
-            .get(ParallelNetworkCallViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this, ViewModelFactory(ApiHelperImpl(RetrofitBuilder.apiService),
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))))
+            .get(CatchViewModel::class.java)
     }
 
     private fun setupObserver(){
-        viewModel.getUsers().observe(this) {
-            when (it.status) {
+        viewModel.getUsers().observe(this){
+            Log.v("Status", it.status.toString())
+            when(it.status){
                 Status.SUCCESS -> {
                     progressBar.visibility = View.GONE
                     it.data?.let { users -> renderList(users) }
@@ -72,14 +70,15 @@ class ParallelNetworkCallActivity: AppCompatActivity() {
                 }
                 Status.ERROR -> {
                     progressBar.visibility = View.GONE
-                    Toast.makeText(applicationContext, "error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, it.message.toString(), Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
     }
 
     private fun renderList(users: List<User>){
-        userAdapter.addData(users)
-        userAdapter.notifyDataSetChanged()
+        adapter.addData(users)
+        adapter.notifyDataSetChanged()
     }
 }

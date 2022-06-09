@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.phyothinzaraung.kotlinflow_example.data.api.ApiHelper
 import com.phyothinzaraung.kotlinflow_example.data.local.DatabaseHelper
 import com.phyothinzaraung.kotlinflow_example.learn.errorhandling.CatchViewModel
+import com.phyothinzaraung.kotlinflow_example.learn.errorhandling.emitall.EmitAllViewModel
 import com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel.ParallelNetworkCallActivity
 import com.phyothinzaraung.kotlinflow_example.learn.retrofit.parallel.ParallelNetworkCallViewModel
 import com.phyothinzaraung.kotlinflow_example.learn.retrofit.single.SingleNetworkCallViewModel
@@ -27,6 +28,9 @@ class ViewModelFactory(private val apiHelper: ApiHelper, private val dbHelper: D
         }
         if(modelClass.isAssignableFrom(CatchViewModel::class.java)){
             return CatchViewModel(apiHelper, dbHelper) as T
+        }
+        if(modelClass.isAssignableFrom(EmitAllViewModel::class.java)){
+            return EmitAllViewModel(apiHelper, dbHelper) as T
         }
 
         throw IllegalArgumentException("Unknown Class Name")

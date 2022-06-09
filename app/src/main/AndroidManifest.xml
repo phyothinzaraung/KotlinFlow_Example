@@ -29,6 +29,7 @@
         <activity android:name=".learn.retrofit.parallel.ParallelNetworkCallActivity"/>
         <activity android:name=".learn.room.RoomDBActivity"/>
         <activity android:name=".learn.errorhandling.CatchActivity"/>
+        <activity android:name=".learn.errorhandling.emitall.EmitAllActivity"/>
     </application>
 
 </manifest>
